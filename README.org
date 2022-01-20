@@ -1,0 +1,27 @@
+* org-capture-filetype
+A plugin that adds custom filetypes to orgmode captures
+** Why?
+orgmode capture templates are my most used feature. 
+I use it daily for journaling, bookmarking, task management, etc.
+One thing that I also like to use it for is capturing ledger entries, 
+but since the templates all use the =org= filetype for capture I'd lose out on my completion and formatting.
+So I wrote this plugin so that I could have the full capability of my ledger config when capturing.
+
+*** Usage
+This plugins replaces the default =open_template= method in nvim-orgmode.
+So it must be required /after/ your orgmode configuration.
+
+#+begin_src lua
+require('orgmode').setup(opts)
+require('org-capture-filetype')
+#+end_src
+
+Adding a filetype to a template is as simple as adding a =filetype= key.
+Here's my ledger template for example (I use fennel, but it should be easy to understand)
+
+#+begin_src fennel
+{:description "Ledger Entry"
+ :template "\n%<%m-%d> %^{Description}\n    %?"
+ :target (string.format "~/.local/ledger/%s.ledger" (vim.fn.strftime "%Y-%m"))
+ :filetype :ledger}
+#+end_src
